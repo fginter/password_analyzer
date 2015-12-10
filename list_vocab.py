@@ -8,6 +8,7 @@
 from wvlib import wvlib
 import codecs
 import sys
+import argparse
 
 # Grabbed this one from wvlib (well I wrote it myself there, so I guess that's not stealing code ;)
 # https://github.com/spyysalo/wvlib/blob/master/wvlib.py
@@ -47,6 +48,11 @@ def list_vocab(f, max_rank=None):
             print w.lower().encode("utf-8")
 
 if __name__=="__main__":
-    with open("/home/ginter/w2v/pb34_wf_200_v2.bin","rb") as f:
-        list_vocab(f)
+    parser = argparse.ArgumentParser(description='List vocabulary from a word2vec model')
+    parser.add_argument('--max-rank', type=int, default=1000000, help='How many items to print? Default: %(default)d')
+    parser.add_argument('binfile', nargs='?', default=("/home/ginter/w2v/pb34_wf_200_v2.bin",), help='Model file. Default %(default)s')
+    args = parser.parse_args()
+
+    with open(args.binfile[0],"rb") as f:
+        list_vocab(f,args.max_rank)
 
