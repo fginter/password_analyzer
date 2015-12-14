@@ -19,6 +19,8 @@ if __name__=="__main__":
     parser.add_argument('--db', default="simdb/pb34_wf_exc.simdb", help='SimString DB built using index_vocab.sh Default: %(default)s')
     args=parser.parse_args()
     vocabdb=simstring.reader(args.db)
+    vocabdb.measure=simstring.overlap
+    vocabdb.threshold=1.0
 
     decode_errors=0
     for counter,pwd in enumerate(sys.stdin):
